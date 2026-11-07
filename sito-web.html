@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koco Community</title>
+    <!-- Importazione del font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --card-hover: #1f2937;
+            --text-color: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-color: #6366f1;
+            --accent-hover: #4f46e5;
+            --border-color: #1f2937;
+            --tag-bg: rgba(99, 102, 241, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #f5f2f2;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--card-hover);
+            border-color: var(--text-muted);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 4rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--text-color);
+            border-color: var(--accent-color);
+            background-color: var(--tag-bg);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.75rem;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--accent-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .card-footer span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            background-color: rgba(11, 15, 25, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hero-buttons .btn {
+                width: 100%;
+            }
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <a href="index.html" class="logo"><span>⚡</span> Koco Community</a>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="discussioni.html">Discussioni</a>
+            <a href="progetti.html">Progetti</a>
+            <a href="risorse.html">Risorse</a>
+        </nav>
+        <div class="nav-buttons">
+            <!-- Sostituisci "login.html" con il link della tua pagina di accesso -->
+            <a href="login.html" class="btn btn-outline">Accedi</a>
+            <!-- Sostituisci "registrazione.html" con il link della pagina di registrazione -->
+            <a href="registrazione.html" class="btn btn-primary">Registrati</a>
+        </div>
+    </header>
+
+    <!-- CONTENUTO PRINCIPALE -->
+    <main>
+        <!-- SEZIONE HERO -->
+        <section class="hero">
+            <h1>Crea, condividi e cresci con la community</h1>
+            <p>UNISCITI ANCHE TU SU DISCORDPARADISE COMMUNITY.</p>
+            <div class="hero-buttons">
+                <!-- Pulsante principale con collegamento -->
+                <a href="registrazione.html" class="btn btn-primary">Unisciti alla Community</a>
+                <!-- Pulsante secondario con collegamento ad altra pagina o sezione -->
+                <a href="#discussioni" class="btn btn-outline">Scopri di più</a>
+            </div>
+        </section>
+
+        <!-- INTESTAZIONE SEZIONE CON FILTRI INTERATTIVI -->
+        <div class="section-header" id="discussioni">
+            <h2>Ultime Discussioni</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCards('all')">Tutti</button>
+                <button class="filter-btn" onclick="filterCards('tech')">Tecnologia</button>
+                <button class="filter-btn" onclick="filterCards('design')">Design</button>
+            </div>
+        </div>
+
+        <!-- GRIGLIA DELLE CARD -->
+        <div class="grid" id="cardGrid">
+            <!-- Card 1 -->
+            <div class="card" data-category="tech">
+                <div>
+                    <div class="card-top">
+                        <span class="tag">Tecnologia</span>
+                    </div>
+                    <h3>💬 funzioni di DISCORDPARADISE</h3>
+                    <p>Consigli pratici e best practice per mantenere il codice pulito e scalabile nel tempo.</p>
+                </div>
+                <div class="card-footer">
+                    <span>❤️ 24 mi piace</span>
+                    <!-- Collega questo pulsante all'articolo specifico -->
+                    <a href="articolo-progetto.html" class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;">Leggi</a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card" data-category="design">
+                <div>
+                    <div class="card-top">
+                        <span class="tag" style="background-color: rgba(236, 72, 153, 0.1); color: #ec4899;">Design</span>
+                    </div>
+                    <h3>🎨 Trend UI/UX per il prossimo anno</h3>
+                    <p>Analizziamo i trend grafici più rilevanti, dai design minimalisti alle interfacce immersive.</p>
+                </div>
+                <div class="card-footer">
+                    <span>❤️ 42 mi piace</span>
+                    <!-- Collega questo pulsante all'articolo specifico -->
+                    <a href="articolo-design.html" class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;">Leggi</a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card" data-category="tech">
+                <div>
+                    <div class="card-top">
+                        <span class="tag">Tecnologia</span>
+                    </div>
+                    <h3>🚀 Ottimizzare le performance web</h3>
+                    <p>Trucchi e strumenti essenziali per velocizzare il caricamento delle pagine e migliorare la SEO.</p>
+                </div>
+                <div class="card-footer">
+                    <span>❤️ 19 mi piace</span>
+                    <!-- Collega questo pulsante all'articolo specifico -->
+                    <a href="articolo-performance.html" class="btn btn-outline" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;">Leggi</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Koco Community. Tutti i diritti riservati.</p>
+    </footer>
+
+    <!-- SCRIPT JAVASCRIPT PER I FILTRI -->
+    <script>
+        function filterCards(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accedi - Koco Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --text-color: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-color: #6366f1;
+            --accent-hover: #4f46e5;
+            --border-color: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .auth-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-home:hover {
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <h2>Bentornato</h2>
+        <!-- Form con evento di reindirizzamento simulato tramite JS -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="tuamail@esempio.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-submit">Accedi</button>
+        </form>
+        <a href="index.html" class="back-home">← Torna alla Home</a>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            // Impedisce al form di ricaricare la pagina in modo classico
+            event.preventDefault();
+
+            // Qui potresti inserire controlli o chiamate API di autenticazione
+
+            // Esempio di reindirizzamento automatico alla home (o a una dashboard) dopo il login
+            alert("Login effettuato con successo! Verrai reindirizzato.");
+            window.location.href = "index.html"; 
+        }
+    </script>
+
+</body>
+</html>
